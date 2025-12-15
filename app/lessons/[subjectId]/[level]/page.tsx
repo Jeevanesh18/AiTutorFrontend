@@ -30,7 +30,7 @@ interface UserProgress {
 }
 
 export default function LevelHubPage() {
-  const { data: session } = useSession();
+  const { data: session,status } = useSession();
   const params = useParams();
   const router = useRouter();
 
@@ -54,6 +54,10 @@ console.log("levelId:", levelId);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+if (status === "unauthenticated") {
+    router.push("/");
+  }
+
     if (!subjectId || !levelId || !userId) return;
 console.log("Loading lobby data for subject:", subjectId, "level:", levelId, "user:", userId);
     const loadLobbyData = async () => {
@@ -63,13 +67,41 @@ console.log("Loading lobby data for subject:", subjectId, "level:", levelId, "us
         // Fetch EVERYTHING in parallel for speed
         const [levelRes, existRes, mainProgressRes, completionRes] = await Promise.all([
           // 1. Level Details
-          fetch(`http://localhost:8080/api/levels/${levelId}`),
+          fetch(`http://localhost:8080/api/levels/${levelId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          // 🔑 Send the Backend-Minted JWT (String)
+          Authorization: `Bearer ${session.accessToken}`,
+        },
+      }),
           // 2. Does Coding Exist?
-          fetch(`http://localhost:8080/api/codingQuestion/exist/level/${levelId}`),
+          fetch(`http://localhost:8080/api/codingQuestion/exist/level/${levelId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          // 🔑 Send the Backend-Minted JWT (String)
+          Authorization: `Bearer ${session.accessToken}`,
+        },
+      }),
           // 3. User's Main Progress (Where are they generally?)
-          fetch(`http://localhost:8080/api/user-progress/user/${userId}/subjectId/${subjectId}`),
+          fetch(`http://localhost:8080/api/user-progress/user/${userId}/subjectId/${subjectId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          // 🔑 Send the Backend-Minted JWT (String)
+          Authorization: `Bearer ${session.accessToken}`,
+        },
+      }),
           // 4. Specific Level Completion (What have they done in THIS level?)
-          fetch(`http://localhost:8080/api/levelCompletion/userId/${userId}/levelId/${levelId}`)
+          fetch(`http://localhost:8080/api/levelCompletion/userId/${userId}/levelId/${levelId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          // 🔑 Send the Backend-Minted JWT (String)
+          Authorization: `Bearer ${session.accessToken}`,
+        },
+      })
         ]);
 
         // --- Process Level Info ---
@@ -114,7 +146,7 @@ console.log("Loading lobby data for subject:", subjectId, "level:", levelId, "us
     };
 
     loadLobbyData();
-  }, [subjectId, levelId, userId]);
+  }, [subjectId, levelId, userId, status, router]);
 
   if (loading) return <div className="min-h-screen bg-black text-white flex items-center justify-center">Loading Mission Data...</div>;
   if (!levelData) return <div className="min-h-screen bg-black text-white flex items-center justify-center">Level Not Found</div>;

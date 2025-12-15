@@ -19,7 +19,7 @@ interface UserProgress {
   subjectId: number;
 }
 export default function SubjectLevelsPage({ subjectId }: { subjectId: number }) {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
   const userId = session?.user?.id;
   const creatingProgressRef = useRef(false);
@@ -30,16 +30,32 @@ export default function SubjectLevelsPage({ subjectId }: { subjectId: number }) 
   const [message, setMessage] = useState<string>("");
 
   useEffect(() => {
-     
+     if (status === "unauthenticated") {
+    router.push("/");
+  }
      if (!userId) return;
 
     const loadData = async () => {
       try {
-        const levelsRes = await fetch(`http://localhost:8080/api/levels/subject/${subjectId}`);
+        const levelsRes = await fetch(`http://localhost:8080/api/levels/subject/${subjectId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          // 🔑 Send the Backend-Minted JWT (String)
+          Authorization: `Bearer ${session.accessToken}`,
+        },
+      });
         const levelsData: Level[] = await levelsRes.json();
         setLevels(levelsData);
         console.log(userId);
-        const progressRes = await fetch(`http://localhost:8080/api/user-progress/user/${userId}/subjectId/${subjectId}`);
+        const progressRes = await fetch(`http://localhost:8080/api/user-progress/user/${userId}/subjectId/${subjectId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          // 🔑 Send the Backend-Minted JWT (String)
+          Authorization: `Bearer ${session.accessToken}`,
+        },
+      });
         const existingProgress: UserProgress = await progressRes.json();
 
        // const existingProgress = progressData.find(p => p.subjectId === subjectId);
@@ -51,7 +67,7 @@ export default function SubjectLevelsPage({ subjectId }: { subjectId: number }) 
           creatingProgressRef.current = true; 
             const newProgress = await fetch("http://localhost:8080/api/user-progress", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json",Authorization: `Bearer ${session.accessToken}` },
             body: JSON.stringify({ userId, subjectId, currentLevelId: 1 }),
           });
                      
@@ -67,7 +83,7 @@ export default function SubjectLevelsPage({ subjectId }: { subjectId: number }) 
     };
 
     loadData();
-  }, [userId, subjectId]);
+  }, [userId, subjectId, status,router]);
 
   // Show temporary message for locked levels
   const handleLockedClick = () => {

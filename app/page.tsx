@@ -6,9 +6,6 @@ import { useRouter } from "next/navigation";
 export default function LandingPage() {
   const { data: session, status } = useSession();
    const router = useRouter();
-   if (session) {
-  console.log("Image Url:\n", session.user?.image)
-   }
 const handleGetStarted = () => {
     if (session) {
       router.push("/lessons");  // redirect if logged in

@@ -109,7 +109,8 @@ export default function SlideTutorPage() {
     setMessages((prev) => [...prev, { sender: "user", text }]);
 
     const res = await fetch("http://localhost:8080/api/slideChat", {
-      method: "POST", credentials: "include",
+      method: "POST", 
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${session?.accessToken}`,
@@ -130,10 +131,15 @@ export default function SlideTutorPage() {
   const resetChat = async () => {
     try {
       await fetch("http://localhost:8080/api/slideChat/reset", {
-        method: "POST", credentials: "include",
+        method: "POST", 
+        credentials: "include",
         headers: {
+          "Content-Type": "application/json",
           Authorization: `Bearer ${session?.accessToken}`,
         },
+        body: JSON.stringify({
+        slideId,
+      }),
       });
       setMessages([]);
     } catch (err) {

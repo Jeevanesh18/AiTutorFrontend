@@ -197,7 +197,7 @@ console.log("Loading lobby data for subject:", subjectId, "level:", levelId, "us
             </Link>
 
             {/* 2. QUIZ CARD */}
-            <Link href={quizDone ? "#" : `/lessons/${subjectId}/${levelId}/quiz`} className={`group w-full md:w-80 lg:w-96 ${quizDone ? 'cursor-default' : ''}`}>
+            <Link href={`/lessons/${subjectId}/${levelId}/quiz`} className={`group w-full md:w-80 lg:w-96 `}>
               <div className={`backdrop-blur-md rounded-2xl p-6 h-full transition duration-300 shadow-xl flex flex-col items-center text-center overflow-hidden relative
                   ${quizDone 
                     ? "bg-green-900/20 border-2 border-green-500" // Completed Style
@@ -225,7 +225,7 @@ console.log("Loading lobby data for subject:", subjectId, "level:", levelId, "us
 
             {/* 3. CODE CARD */}
             {hasCoding && (
-              <Link href={codingDone ? "#" : `/lessons/${subjectId}/${levelId}/code`} className={`group w-full md:w-80 lg:w-96 ${codingDone ? 'cursor-default' : ''}`}>
+              <Link href={`/lessons/${subjectId}/${levelId}/code`} className={`group w-full md:w-80 lg:w-96 `}>
                 <div className={`backdrop-blur-md rounded-2xl p-6 h-full transition duration-300 shadow-xl flex flex-col items-center text-center relative overflow-hidden
                     ${codingDone 
                         ? "bg-green-900/20 border-2 border-green-500" 

@@ -185,7 +185,7 @@ console.log("Loading lobby data for subject:", subjectId, "level:", levelId, "us
           <div className="flex flex-wrap justify-center gap-8">
             
             {/* 1. LEARN CARD (Always available, no checkmark needed usually) */}
-            <Link href={`/lessons/${subjectId}/${levelId}/learn`} className="group w-full md:w-80 lg:w-96">
+            <Link href={`/lessons/${subjectId}/${levelId}/slides`} className="group w-full md:w-80 lg:w-96">
               <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 h-full hover:bg-white/20 hover:scale-[1.02] transition duration-300 shadow-xl cursor-pointer flex flex-col items-center text-center overflow-hidden">
                 <div className="relative w-full h-48 mb-6 rounded-xl overflow-hidden shadow-inner">
                    <Image src="/card-theory.jpg" alt="Theory" fill className="object-cover group-hover:scale-110 transition duration-500" />

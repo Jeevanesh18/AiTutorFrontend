@@ -6,7 +6,6 @@ import { useSession } from "next-auth/react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-
 interface SlidePage {
   pageId: number;
   pageNumber: number;
@@ -26,6 +25,8 @@ export default function SlideTutorPage() {
   const [messages, setMessages] = useState<{ sender: "user" | "ai"; text: string }[]>([]);
   const [imageUrl, setImageUrl] = useState<string>("");
   const [loading, setLoading] = useState(true);
+  
+  const [isThinking, setIsThinking] = useState(false);
 
   // ----------------- LOAD SLIDE ID -----------------
   useEffect(() => {
@@ -105,8 +106,12 @@ export default function SlideTutorPage() {
   // ----------------- CHAT -----------------
   const sendMessage = async (text: string) => {
     if (!text || !currentPage) return;
-
-    setMessages((prev) => [...prev, { sender: "user", text }]);
+    setIsThinking(true);
+    setMessages((prev) => [
+      ...prev,
+      { sender: "user", text: text },
+      { sender: "ai", text: "Thinking..." },
+    ]);
 
     const res = await fetch("http://localhost:8080/api/slideChat", {
       method: "POST", 
@@ -124,7 +129,8 @@ export default function SlideTutorPage() {
 
     const data = await res.json();
     const reply = data.reply || `Error: ${data.error}`;
-    setMessages((prev) => [...prev, { sender: "ai", text: reply }]);
+    setMessages((prev) => [...prev.slice(0, -1), { sender: "ai", text: reply }]);
+    setIsThinking(false);
   };
 
   // ----------------- RESET CHAT -----------------

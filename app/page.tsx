@@ -3,12 +3,26 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
+
 export default function LandingPage() {
   const { data: session, status } = useSession();
    const router = useRouter();
-const handleGetStarted = () => {
+ const handleGetStarted = async () => {
     if (session) {
-      router.push("/lessons");  // redirect if logged in
+      console.log("User is logged in, checking token validity...");
+      const res = await fetch(`http://localhost:8080/api/users/tokenStillValid`, {
+    headers: {
+      Authorization: `Bearer ${session.accessToken}`,
+    },
+  });
+
+  if (res.status === 401) {
+    console.log("Token is invalid or expired, signing out...");
+    await signOut({ callbackUrl: "/" });
+    return;
+  }
+
+  router.push("/lessons");
     } else {
       signIn("google", { prompt: "login" }); // login first
     }

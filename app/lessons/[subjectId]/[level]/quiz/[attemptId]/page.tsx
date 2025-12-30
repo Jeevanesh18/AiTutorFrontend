@@ -320,11 +320,7 @@ export default function QuizReviewPage() {
               />
             </div>
           ))}
-          {isThinking && (
-             <div className="self-start mr-auto p-3 bg-gray-700 rounded-lg rounded-bl-none text-gray-400 text-sm animate-pulse">
-                Thinking...
-             </div>
-          )}
+          
         </div>
 
         <div className="flex gap-2 mt-3">

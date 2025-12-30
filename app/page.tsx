@@ -35,12 +35,7 @@ export default function LandingPage() {
         {/* Left side: user profile after login */}
         {session ? (
           <div className="flex items-center gap-4 ml-auto">
-            <img
-  src={session.user?.image || "/default-avatar.png"}
-  
-  alt="Avatar"
-  className="w-10 h-10 rounded-full"
-/>
+            
 
             <span className="font-medium text-black">{session.user?.name || session.user?.email}</span>
             <button

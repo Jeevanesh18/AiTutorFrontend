@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -178,6 +179,13 @@ export default function SlideTutorPage() {
 
   return (
     <div className="flex gap-4 p-4 h-screen bg-gray-900 text-white">
+       {/* Top-left Back Button */}
+  <button
+    onClick={() => router.push(`/lessons/${subjectId}/${levelId}`)}
+    className="absolute top-4 left-4 bg-white/80 hover:bg-white text-black font-semibold py-2 px-4 rounded-lg shadow-lg transition z-20"
+  >
+    ← Back
+  </button>
       {/* Slide Section */}
       <div className="w-2/3 flex flex-col">
         <div className="bg-gray-800 rounded-lg h-[450px] flex items-center justify-center mb-4">
@@ -237,18 +245,22 @@ export default function SlideTutorPage() {
 
   {/* Input */}
   <div className="flex gap-2 mt-2">
-    <input
-      className="flex-1 border border-gray-600 rounded px-2 py-1 bg-gray-900 text-white"
-      placeholder="Ask anything..."
-      onKeyDown={(e) => {
-        if (e.key === "Enter") {
-          sendMessage((e.target as HTMLInputElement).value);
-          (e.target as HTMLInputElement).value = "";
-        }
-      }}
-    />
+    <textarea
+    className="flex-1 border border-gray-600 rounded px-2 py-1 bg-gray-900 text-white resize-none"
+    placeholder="Ask anything..."
+    rows={2} // initial height
+    onKeyDown={(e) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault(); // prevent adding a new line
+        sendMessage(e.currentTarget.value);
+        e.currentTarget.value = "";
+      }
+      // Shift+Enter will naturally add a new line
+    }}
+  />
     <button
       className="px-4 py-2 bg-green-600 rounded hover:bg-green-700 active:bg-green-800 active:scale-95 transition"
+       disabled={isThinking }
       onClick={() => {
         const input = document.querySelector<HTMLInputElement>("input");
         if (input) {

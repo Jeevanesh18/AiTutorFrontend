@@ -167,10 +167,10 @@ if (status === "unauthenticated") {
 
        {/* Back Button */}
        <button 
-         onClick={() => router.back()} 
+         onClick={() => router.push(`/lessons/${subjectId}`)} 
          className="absolute top-8 left-8 z-20 text-white hover:text-yellow-400 font-bold flex items-center gap-2 transition"
        >
-         ← Back to Map
+         ← Back to Levels
        </button>
 
        {/* Content */}

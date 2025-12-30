@@ -418,6 +418,13 @@ export default function QuizPage() {
 
   return (
     <div className="flex h-screen gap-4 p-4 bg-gray-900 text-white">
+      {/* Top-left Back Button */}
+  <button
+    onClick={() => router.push(`/lessons/${subjectId}/${levelId}`)}
+    className="absolute top-4 left-4 bg-white/80 hover:bg-white text-black font-semibold py-2 px-4 rounded-lg shadow-lg transition z-20"
+  >
+    ← Back
+  </button>
       {/* ---------------- PROGRESS ---------------- */}
       <div className="w-1/6 bg-gray-800 rounded-lg p-4 border border-gray-700">
         <h3 className="font-bold mb-3">Progress</h3>

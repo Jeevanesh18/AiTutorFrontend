@@ -106,6 +106,14 @@ export default function SubjectLevelsPage({ subjectId }: { subjectId: number }) 
 
       {/* Content */}
       <div className="relative z-10 flex-1 p-8 flex flex-col items-center">
+{/* Top-left Back Button */}
+  <button
+    onClick={() => router.push("/lessons")}
+    className="absolute top-4 left-4 bg-white/80 hover:bg-white text-black font-semibold py-2 px-4 rounded-lg shadow-lg transition"
+  >
+    ← Lessons
+  </button>
+
         <h1 className="text-4xl font-bold text-white mb-8 drop-shadow-lg">
           Levels🎮
         </h1>

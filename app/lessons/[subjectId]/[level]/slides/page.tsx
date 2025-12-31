@@ -105,17 +105,19 @@ export default function SlideTutorPage() {
   }, [currentPage, session]);
 
   // ----------------- CHAT -----------------
-  const sendMessage = async (text: string) => {
-    if (!text || !currentPage) return;
-    setIsThinking(true);
-    setMessages((prev) => [
-      ...prev,
-      { sender: "user", text: text },
-      { sender: "ai", text: "Thinking..." },
-    ]);
+ const sendMessage = async (text: string) => {
+  if (!text || !currentPage) return;
 
+  setIsThinking(true);
+  setMessages((prev) => [
+    ...prev,
+    { sender: "user", text },
+    { sender: "ai", text: "Thinking..." },
+  ]);
+
+  try {
     const res = await fetch("http://localhost:8080/api/slideChat", {
-      method: "POST", 
+      method: "POST",
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
@@ -128,11 +130,51 @@ export default function SlideTutorPage() {
       }),
     });
 
+    // 🚨 RATE LIMIT HIT
+    if (res.status === 429) {
+      setMessages((prev) => [
+        ...prev.slice(0, -1),
+        {
+          sender: "ai",
+          text: "Too many requests. Wait for 1 minute.",
+        },
+      ]);
+      setIsThinking(false);
+      return;
+    }
+
+    // ❌ Other backend errors
+    if (!res.ok) {
+      setMessages((prev) => [
+        ...prev.slice(0, -1),
+        {
+          sender: "ai",
+          text: "Something went wrong. Please try again.",
+        },
+      ]);
+      setIsThinking(false);
+      return;
+    }
+
     const data = await res.json();
     const reply = data.reply || `Error: ${data.error}`;
-    setMessages((prev) => [...prev.slice(0, -1), { sender: "ai", text: reply }]);
+
+    setMessages((prev) => [
+      ...prev.slice(0, -1),
+      { sender: "ai", text: reply },
+    ]);
+  } catch (error) {
+    setMessages((prev) => [
+      ...prev.slice(0, -1),
+      {
+        sender: "ai",
+        text: "Network error. Check your connection.",
+      },
+    ]);
+  } finally {
     setIsThinking(false);
-  };
+  }
+};
 
   // ----------------- RESET CHAT -----------------
   const resetChat = async () => {

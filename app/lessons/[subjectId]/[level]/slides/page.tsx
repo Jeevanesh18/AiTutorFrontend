@@ -129,9 +129,9 @@ export default function SlideTutorPage() {
         pageId: currentPage.pageId,
       }),
     });
-
     // 🚨 RATE LIMIT HIT
     if (res.status === 429) {
+
       setMessages((prev) => [
         ...prev.slice(0, -1),
         {

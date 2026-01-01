@@ -101,6 +101,34 @@ export default function QuizReviewPage() {
           userAnswer: userAnswers[currentQuestion.id],
         }),
       });
+
+
+if (res.status === 429) {
+
+      setChatMessages((prev) => [
+        ...prev.slice(0, -1),
+        {
+          role: "ai",
+          content: "Too many requests. Wait for 1 minute.",
+        },
+      ]);
+      setIsThinking(false);
+      return;
+    }
+
+    // ❌ Other backend errors
+    if (!res.ok) {
+      setChatMessages((prev) => [
+        ...prev.slice(0, -1),
+        {
+          role: "ai",
+          content: "Something went wrong. Please try again.",
+        },
+      ]);
+      setIsThinking(false);
+      return;
+    }
+
       const data = await res.json();
 
       setChatMessages((prev) => [

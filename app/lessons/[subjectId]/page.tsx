@@ -10,7 +10,6 @@ export default async function SubjectLevelsPageServer({ params }: Props) {
   const resolvedParams = await params; // <- key fix
 
   const subjectId = parseInt(resolvedParams.subjectId);
-  console.log("Subject ID", subjectId);
 
   return <SubjectLevelsPage subjectId={subjectId} />;
 }

@@ -47,7 +47,6 @@ export default function SubjectLevelsPage({ subjectId }: { subjectId: number }) 
       });
         const levelsData: Level[] = await levelsRes.json();
         setLevels(levelsData);
-        console.log(userId);
         const progressRes = await fetch(`http://localhost:8080/api/user-progress/user/${userId}/subjectId/${subjectId}`, {
         method: "GET",
         headers: {
@@ -72,7 +71,6 @@ export default function SubjectLevelsPage({ subjectId }: { subjectId: number }) 
           });
                      
           const created = await newProgress.json();
-          console.log("Created new progress:", created);
           setCurrentLevel(created.currentLevelId);
         }
       } catch (err) {

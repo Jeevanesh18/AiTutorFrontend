@@ -114,21 +114,14 @@ if (status === "unauthenticated") {
           // LOGIC: If user is on a HIGHER level (or different level), assume this one is fully passed.
           // Note: Ideally compare orderNum, but strictly comparing IDs works if user can't skip ahead.
           if (Number(mainProgress.currentLevelId) !== levelId) {
-             console.log("User is on a different level. Assuming this level is fully complete.");
              setQuizDone(true);
              setCodingDone(true);
           } else {
              // LOGIC: User is ON this level currently. Check specific completion flags.
-             console.log("User is on this level. Checking specific tasks...");
-             console.log("completionRes", completionRes);
              if (completionRes.ok) {
                // The backend might return null if no record exists yet (user just started)
                const completionData = await completionRes.json(); 
                
-  console.log("RAW completionRes.ok:", completionRes.ok);
-  console.log("RAW completion response:", completionData);
-  console.log("quizDone from backend:", completionData?.quizDone);
-  console.log("codingDone from backend:", completionData?.codingDone);
                if (completionData) {
                  setQuizDone(completionData.quizDone);
                  setCodingDone(completionData.codingDone);

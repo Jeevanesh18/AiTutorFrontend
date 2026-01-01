@@ -9,7 +9,6 @@ export default function LandingPage() {
    const router = useRouter();
  const handleGetStarted = async () => {
     if (session) {
-      console.log("User is logged in, checking token validity...");
       const res = await fetch(`http://localhost:8080/api/users/tokenStillValid`, {
     headers: {
       Authorization: `Bearer ${session.accessToken}`,
@@ -17,7 +16,6 @@ export default function LandingPage() {
   });
 
   if (res.status === 401) {
-    console.log("Token is invalid or expired, signing out...");
     await signOut({ callbackUrl: "/" });
     return;
   }

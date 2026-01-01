@@ -35,8 +35,6 @@ export default function LessonsPage() {
       // Wait until session is ready and ensures accessToken exists
       if (status !== "authenticated" || !session?.accessToken) return;
 
-      console.log("Session status:", status);
-      console.log("Using Access Token:", session.accessToken);
 
       const res = await fetch("http://localhost:8080/api/subjects", {
         method: "GET",

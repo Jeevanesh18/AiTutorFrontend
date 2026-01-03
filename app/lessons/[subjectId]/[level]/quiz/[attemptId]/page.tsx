@@ -47,7 +47,7 @@ export default function QuizReviewPage() {
     if (status !== "authenticated" || !session?.accessToken) return;
 
     fetch(
-      `http://localhost:8080/api/mcqQuestionAttempts/level/${levelId}/attempt/${attemptId}`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/mcqQuestionAttempts/level/${levelId}/attempt/${attemptId}`,
       {
         headers: {
           Authorization: `Bearer ${session.accessToken}`,
@@ -87,7 +87,7 @@ export default function QuizReviewPage() {
     ]);
 
     try {
-      const res = await fetch("http://localhost:8080/api/questionAnswerChat", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/questionAnswerChat`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -147,7 +147,7 @@ if (res.status === 429) {
 
   const resetChat = async () => {
     try {
-      await fetch("http://localhost:8080/api/questionAnswerChat/reset", {
+      await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/questionAnswerChat/reset`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -172,7 +172,7 @@ if (res.status === 429) {
   // ---------------- COMPLETE LEVEL IF ALL CORRECT ----------------
   useEffect(() => {
     if (allCorrect && questions.length > 0) {
-      fetch("http://localhost:8080/api/levelCompletion/complete-quiz", {
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/levelCompletion/complete-quiz`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

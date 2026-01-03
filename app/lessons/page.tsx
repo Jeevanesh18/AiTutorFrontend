@@ -36,7 +36,7 @@ export default function LessonsPage() {
       if (status !== "authenticated" || !session?.accessToken) return;
 
 
-      const res = await fetch("http://localhost:8080/api/subjects", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/subjects`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

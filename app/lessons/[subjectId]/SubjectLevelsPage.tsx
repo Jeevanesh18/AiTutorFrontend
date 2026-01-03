@@ -37,7 +37,7 @@ export default function SubjectLevelsPage({ subjectId }: { subjectId: number }) 
 
     const loadData = async () => {
       try {
-        const levelsRes = await fetch(`http://localhost:8080/api/levels/subject/${subjectId}`, {
+        const levelsRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/levels/subject/${subjectId}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -47,7 +47,7 @@ export default function SubjectLevelsPage({ subjectId }: { subjectId: number }) 
       });
         const levelsData: Level[] = await levelsRes.json();
         setLevels(levelsData);
-        const progressRes = await fetch(`http://localhost:8080/api/user-progress/user/${userId}/subjectId/${subjectId}`, {
+        const progressRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user-progress/user/${userId}/subjectId/${subjectId}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -64,7 +64,7 @@ export default function SubjectLevelsPage({ subjectId }: { subjectId: number }) 
 
           if (creatingProgressRef.current) return; 
           creatingProgressRef.current = true; 
-            const newProgress = await fetch("http://localhost:8080/api/user-progress", {
+            const newProgress = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user-progress`, {
             method: "POST",
             headers: { "Content-Type": "application/json",Authorization: `Bearer ${session.accessToken}` },
             body: JSON.stringify({ userId, subjectId, currentLevelId: 1 }),

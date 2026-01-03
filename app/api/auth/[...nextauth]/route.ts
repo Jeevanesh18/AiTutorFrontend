@@ -19,9 +19,10 @@ export const authOptions: NextAuthOptions = {
     // We add 'user' to the destructuring here
     async signIn({ account, user }) {
       if (!account?.id_token) return false;
+console.log("Calling backend:", `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/auth/google`);
 
       try {
-        const res = await fetch("http://localhost:8080/api/users/auth/google", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/auth/google`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ id_token: account.id_token }),

@@ -72,7 +72,7 @@ useEffect(() => {
   useEffect(() => {
     if (!session) return;
 
-    fetch(`http://localhost:8080/api/codingQuestion/level/${levelId}`, {
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/codingQuestion/level/${levelId}`, {
       headers: {
         Authorization: `Bearer ${session.accessToken}`,
       },
@@ -261,8 +261,9 @@ useEffect(() => {
     connectionExist.current = true;
     
     const ws = new WebSocket(
-      `ws://localhost:8080/run?token=${session.accessToken}`
-    );
+  `${process.env.NEXT_PUBLIC_WS_URL}/run?token=${session.accessToken}`
+);
+console.log(ws);
     wsRef.current = ws;
 
     ws.onmessage = (evt) => {
@@ -332,7 +333,7 @@ useEffect(() => {
 
   const resetChat = async () => {
     try {
-      await fetch("http://localhost:8080/api/chat/reset", {
+      await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/chat/reset`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -386,7 +387,7 @@ useEffect(() => {
       alert("🎉 You have finished all coding questions for this level!");
       const userId = (session.user as any).id || (session as any).userId;
       if (userId) {
-        fetch(`http://localhost:8080/api/levelCompletion/complete-coding`, {
+        fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/levelCompletion/complete-coding`, {
           method: "POST",
           headers: {
             "Authorization": `Bearer ${session.accessToken}`,
@@ -607,7 +608,7 @@ function AIChat({
         : "";
 
     try {
-      const res = await fetch("http://localhost:8080/api/chat", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/chat`, {
         method: "POST",
         credentials: "include",
         headers: {

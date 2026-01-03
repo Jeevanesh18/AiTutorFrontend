@@ -36,7 +36,7 @@ export default function SlideTutorPage() {
     const fetchSlideId = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`http://localhost:8080/api/slides/level/${levelId}`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/slides/level/${levelId}`, {
           headers: {
             Authorization: `Bearer ${session?.accessToken}`,
           },
@@ -60,7 +60,7 @@ export default function SlideTutorPage() {
     const fetchPages = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`http://localhost:8080/api/slidePages/SlideId/${slideId}`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/slidePages/SlideId/${slideId}`, {
           headers: {
             Authorization: `Bearer ${session?.accessToken}`,
           },
@@ -86,7 +86,7 @@ export default function SlideTutorPage() {
 
     const fetchImage = async () => {
       try {
-        const res = await fetch(`http://localhost:8080/api/slidePages/pageImage/${currentPage.pageId}`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/slidePages/pageImage/${currentPage.pageId}`, {
           headers: { Authorization: `Bearer ${session.accessToken}` },
         });
         const blob = await res.blob();
@@ -116,7 +116,7 @@ export default function SlideTutorPage() {
   ]);
 
   try {
-    const res = await fetch("http://localhost:8080/api/slideChat", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/slideChat`, {
       method: "POST",
       credentials: "include",
       headers: {
@@ -179,7 +179,7 @@ export default function SlideTutorPage() {
   // ----------------- RESET CHAT -----------------
   const resetChat = async () => {
     try {
-      await fetch("http://localhost:8080/api/slideChat/reset", {
+      await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/slideChat/reset`, {
         method: "POST", 
         credentials: "include",
         headers: {

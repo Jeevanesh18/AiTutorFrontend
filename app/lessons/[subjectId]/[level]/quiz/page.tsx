@@ -35,7 +35,7 @@ export default function QuizPage() {
   useEffect(() => {
     if (status !== "authenticated" || !session?.accessToken) return;
 
-    fetch(`http://localhost:8080/api/mcq-questions/level/${levelId}`, {
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/mcq-questions/level/${levelId}`, {
       headers: {
         Authorization: `Bearer ${session.accessToken}`,
       },
@@ -58,7 +58,7 @@ export default function QuizPage() {
   const submitAnswers = async () => {
     try {
       const res = await fetch(
-        `http://localhost:8080/api/mcqQuestionAttempts/save/${levelId}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/mcqQuestionAttempts/save/${levelId}`,
         {
           method: "POST",
           credentials: "include",

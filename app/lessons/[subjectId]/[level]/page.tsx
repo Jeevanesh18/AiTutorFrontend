@@ -60,7 +60,7 @@ if (status === "unauthenticated") {
         // Fetch EVERYTHING in parallel for speed
         const [levelRes, existRes, mainProgressRes, completionRes] = await Promise.all([
           // 1. Level Details
-          fetch(`http://localhost:8080/api/levels/${levelId}`, {
+          fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/levels/${levelId}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -69,7 +69,7 @@ if (status === "unauthenticated") {
         },
       }),
           // 2. Does Coding Exist?
-          fetch(`http://localhost:8080/api/codingQuestion/exist/level/${levelId}`, {
+          fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/codingQuestion/exist/level/${levelId}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -78,7 +78,7 @@ if (status === "unauthenticated") {
         },
       }),
           // 3. User's Main Progress (Where are they generally?)
-          fetch(`http://localhost:8080/api/user-progress/user/${userId}/subjectId/${subjectId}`, {
+          fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user-progress/user/${userId}/subjectId/${subjectId}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -87,7 +87,7 @@ if (status === "unauthenticated") {
         },
       }),
           // 4. Specific Level Completion (What have they done in THIS level?)
-          fetch(`http://localhost:8080/api/levelCompletion/userId/${userId}/levelId/${levelId}`, {
+          fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/levelCompletion/userId/${userId}/levelId/${levelId}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

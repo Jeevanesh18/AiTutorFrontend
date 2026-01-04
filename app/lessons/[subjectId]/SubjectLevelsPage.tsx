@@ -74,7 +74,7 @@ export default function SubjectLevelsPage({ subjectId }: { subjectId: number }) 
           setCurrentLevel(created.currentLevelId);
         }
       } catch (err) {
-        console.error("Failed to load levels:", err);
+       // console.error("Failed to load levels:", err);
       }
 
       setLoading(false);

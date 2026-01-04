@@ -263,7 +263,7 @@ useEffect(() => {
     const ws = new WebSocket(
   `${process.env.NEXT_PUBLIC_WS_URL}/run?token=${session.accessToken}`
 );
-console.log(ws);
+//console.log(ws);
     wsRef.current = ws;
 
     ws.onmessage = (evt) => {
@@ -288,7 +288,9 @@ console.log(ws);
 
         let result = msg.data;
         if (typeof result === "string") {
-          try { result = JSON.parse(result); } catch (e) { console.error(e); }
+          try { result = JSON.parse(result); } catch (e) { 
+            //console.error(e); 
+          }
         }
 
         if (result.correct) {
@@ -346,7 +348,7 @@ console.log(ws);
       });
       setMsgs([]);
     } catch (err) {
-      console.error("Failed to reset chat", err);
+     // console.error("Failed to reset chat", err);
     }
   };
 
@@ -397,7 +399,9 @@ console.log(ws);
             userId: userId,
             levelId: levelId
           })
-        }).catch(err => console.error(err));
+        }).catch(err => 
+          console.error(err)
+        );
       }
     }
   }, [completed, levelId, session]);

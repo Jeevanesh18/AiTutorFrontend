@@ -5,19 +5,19 @@ import { useRouter } from "next/navigation";
 
 
 export default function LandingPage() {
-  console.log("Rendering LandingPage");
+//  console.log("Rendering LandingPage");
   const { data: session, status } = useSession();
    const router = useRouter();
-   console.log("Session data:", session);
+  // console.log("Session data:", session);
  const handleGetStarted = async () => {
     if (session) {
-      console.log("Active session found, validating token");
+    //  console.log("Active session found, validating token");
       const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/tokenStillValid`, {
     headers: {
       Authorization: `Bearer ${session.accessToken}`,
     },
   });
-console.log("Token validation response status:", res.status);
+//console.log("Token validation response status:", res.status);
   if (res.status === 401) {
     await signOut({ callbackUrl: "/" });
     return;
@@ -25,7 +25,7 @@ console.log("Token validation response status:", res.status);
 
   router.push("/lessons");
     } else {
-      console.log("No active session, redirecting to login");
+    //  console.log("No active session, redirecting to login");
       signIn("google", { prompt: "login" }); // login first
     }
   };

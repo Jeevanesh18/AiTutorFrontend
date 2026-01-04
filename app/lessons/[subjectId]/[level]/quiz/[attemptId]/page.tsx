@@ -158,7 +158,7 @@ if (res.status === 429) {
       });
       setChatMessages([]);
     } catch (err) {
-      console.error("Failed to reset chat", err);
+      //console.error("Failed to reset chat", err);
     }
   };
 

@@ -19,7 +19,6 @@ export const authOptions: NextAuthOptions = {
     // We add 'user' to the destructuring here
     async signIn({ account, user }) {
       if (!account?.id_token) return false;
-console.log("Calling backend:", `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/auth/google`);
 
       try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/auth/google`, {
@@ -29,7 +28,7 @@ console.log("Calling backend:", `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user
         });
 
         if (!res.ok) {
-          console.error("Backend authentication failed");
+       //   console.error("Backend authentication failed");
           return false;
         }
 
@@ -42,7 +41,7 @@ console.log("Calling backend:", `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user
 
         return true;
       } catch (error) {
-        console.error("Error connecting to backend:", error);
+   //     console.error("Error connecting to backend:", error);
         return false;
       }
     },

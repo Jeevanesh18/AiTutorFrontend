@@ -44,7 +44,7 @@ export default function SlideTutorPage() {
         const data = await res.json();
         if (data.length > 0) setSlideId(data[0].slideId);
       } catch (err) {
-        console.error("Failed to fetch slideId", err);
+        //console.error("Failed to fetch slideId", err);
       } finally {
         setLoading(false);
       }
@@ -69,7 +69,7 @@ export default function SlideTutorPage() {
         data.sort((a: SlidePage, b: SlidePage) => a.pageNumber - b.pageNumber);
         setPages(data);
       } catch (err) {
-        console.error("Failed to load pages", err);
+       // console.error("Failed to load pages", err);
       } finally {
         setLoading(false);
       }
@@ -93,7 +93,7 @@ export default function SlideTutorPage() {
         const url = URL.createObjectURL(blob);
         setImageUrl(url);
       } catch (err) {
-        console.error("Failed to load slide image", err);
+       // console.error("Failed to load slide image", err);
       }
     };
 
@@ -192,7 +192,7 @@ export default function SlideTutorPage() {
       });
       setMessages([]);
     } catch (err) {
-      console.error("Failed to reset chat", err);
+      //console.error("Failed to reset chat", err);
     }
   };
 

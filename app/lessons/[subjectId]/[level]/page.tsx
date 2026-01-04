@@ -131,7 +131,7 @@ if (status === "unauthenticated") {
         }
 
       } catch (error) {
-        console.error("Failed to load lobby data", error);
+        //console.error("Failed to load lobby data", error);
       } finally {
         setLoading(false);
       }

@@ -46,7 +46,7 @@ export default function LessonsPage() {
       });
 
       if (!res.ok) {
-        console.error("Backend returned error:", res.status, await res.text());
+      //  console.error("Backend returned error:", res.status, await res.text());
         // Optional: specific handling for 401 (expired token)
         if (res.status === 401) {
             // Force sign out if token is invalid
@@ -58,7 +58,7 @@ export default function LessonsPage() {
       const data: Subject[] = await res.json();
       setSubjects(data);
     } catch (e) {
-      console.error("Fetching subjects failed:", e);
+     // console.error("Fetching subjects failed:", e);
     }
   };
 
